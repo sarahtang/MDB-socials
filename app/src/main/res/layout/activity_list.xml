@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    tools:context="com.example.sarahtang.mdbsocials.ListActivity">
+
+
+    <include
+        layout="@layout/content_list"
+        android:layout_height="0dp"
+        android:id="@+id/include"
+        android:layout_width="0dp"
+        tools:layout_constraintRight_creator="1"
+        tools:layout_constraintBottom_creator="1"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        tools:layout_constraintLeft_creator="1"
+        app:layout_constraintLeft_toLeftOf="parent" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:srcCompat="@drawable/ic_add_black_24dp"
+        tools:layout_constraintRight_creator="1"
+        tools:layout_constraintBottom_creator="1"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:background="#51a2da"
+        android:layout_marginBottom="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginEnd="16dp" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:clickable="true"
+        app:fabSize="mini"
+        app:srcCompat="@drawable/ic_navigate_before_black_24dp"
+        android:id="@+id/signOut"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintRight_toLeftOf="@+id/fab"
+        android:layout_marginEnd="16dp"
+        android:layout_marginRight="16dp"
+        android:background="#51a2da"
+        app:layout_constraintBottom_toTopOf="@+id/include"
+        android:layout_marginBottom="16dp" />
+
+    <android.support.v7.widget.RecyclerView
+        android:layout_width="356dp"
+        android:layout_height="535dp"
+        android:id="@+id/recyclerSocial"
+        tools:layout_editor_absoluteY="16dp"
+        tools:layout_editor_absoluteX="14dp" />
+
+</android.support.constraint.ConstraintLayout>
