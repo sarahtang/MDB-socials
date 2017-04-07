@@ -7,12 +7,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import org.w3c.dom.Text;
-
 import java.util.ArrayList;
 
 /**
  * Created by sarahtang on 2/21/17.
+ *
+ * Interested adapter connects with list of people (email)
+ * that are interested in the social.
  */
 
 
@@ -26,7 +27,6 @@ public class InterestedAdapter extends RecyclerView.Adapter<InterestedAdapter.Cu
     }
 
     @Override
-    //returns a CustomViewHolder and gives a ViewGroup and viewType (pass in viewType)
     public CustomViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.interested_row_view, parent, false);
         return new CustomViewHolder(view);

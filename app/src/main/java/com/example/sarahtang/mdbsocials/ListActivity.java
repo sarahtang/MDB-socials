@@ -1,17 +1,13 @@
 package com.example.sarahtang.mdbsocials;
 
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Message;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
-import android.widget.ListAdapter;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -23,14 +19,19 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.example.sarahtang.mdbsocials.NewSocialActivity.ref;
 
-public class ListActivity extends AppCompatActivity {
+/**
+ * List Activity: Main list for social events
+ */
+
+public class ListActivity extends AppCompatActivity implements View.OnClickListener {
     //List view = recycler activity and main list showing the list of socials
     protected SocialsAdapter socialsAdapter;
     ArrayList<Social> socials;
     static public ArrayList<String> keyList;
 
+    FloatingActionButton fab;
+    FloatingActionButton signOut;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,30 +41,22 @@ public class ListActivity extends AppCompatActivity {
         socials = new ArrayList<>();
         keyList = new ArrayList<>();
         final ArrayList<Social> listSocials = socials;
+
+        //Connect with adapter
         socialsAdapter = new SocialsAdapter(getApplicationContext(), socials);
         final RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recyclerSocial);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this)); //change this to getApplicationContext()
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(socialsAdapter);
         final DatabaseReference ref = FirebaseDatabase.getInstance().getReference("/socials");
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), NewSocialActivity.class);
-                startActivity(intent);
-            }
-        });
+        /**
+         * On Click listener
+         */
 
-        FloatingActionButton signOut = (FloatingActionButton) findViewById(R.id.signOut);
-        signOut.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                FirebaseAuth.getInstance().signOut();
-                Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
-                startActivity(intent);
-            }
-        });
+        fab = (FloatingActionButton) findViewById(R.id.fab);
+        signOut = (FloatingActionButton) findViewById(R.id.signOut);
+        fab.setOnClickListener(this);
+        signOut.setOnClickListener(this);
 
         //This line orders the socials by time (recent to least recent) in the beginning
         ref.orderByChild("time").addValueEventListener(new ValueEventListener() {
@@ -87,7 +80,28 @@ public class ListActivity extends AppCompatActivity {
 
             }
         });
+    }
 
+    /**
+     * On Click listener implementation
+     * @param view
+     */
+
+    public void onClick(View view) {
+        if (view.getId() == R.id.fab) {
+            //Go to new social activity
+            Log.d("ListAct", "NewSocial");
+            Intent intent = new Intent(getApplicationContext(), NewSocialActivity.class);
+            startActivity(intent);
+        }
+        if (view.getId() == R.id.signOut) {
+            //Sign out user and go back to login activity
+            Log.d("ListAct", "logout");
+            FirebaseAuth.getInstance().signOut();
+            Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+            startActivity(intent);
+
+        }
     }
 
 }
